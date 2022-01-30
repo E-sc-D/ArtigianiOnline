@@ -13,7 +13,7 @@
         } 
         else 
         {
-            echo"7";//no account data coud be found
+            print_r($_POST);//no account data coud be found
             die();
         }
     } 
@@ -21,7 +21,7 @@
     {
     // print_r("session started");  
         $user = $_POST['user'];
-        $pass = $_POST['pass'];
+        $pass = $_POST['password'];
     }
 
     if (!$conn) 
@@ -33,7 +33,6 @@
     //ask the database if the email received exists
     $userRequest = "SELECT * FROM `artigiano` WHERE email LIKE '" . $user . "';";
     $userdata = mysqli_query($conn, $userRequest);
-    $userdata = mysqli_query($conn, $userRequest);
     
     if (!$userdata) 
     {
@@ -44,11 +43,18 @@
     $userdata  = mysqli_fetch_array($userdata, MYSQLI_ASSOC);
     //check if the password is right
 
-    if ($userdata["Password"] != $pass) 
+    if ($userdata === null) 
     {
-        echo"10";//wrong password
+        echo"10";//email not existing
         die();
     }
+
+    if ($userdata["password"] != $pass)
+    {
+        echo"11";//email not existing
+        die();
+    }
+
 
     $_SESSION["user"] = $user;
     $_SESSION["password"] = $pass;

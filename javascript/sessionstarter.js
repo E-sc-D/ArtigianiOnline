@@ -32,15 +32,14 @@
         // se status=200 OK   -  404 Not found
         if (xmlhttp.readyState == 4 && xmlhttp.status == 200)
         {
-            //i dati trasmessi dal server sono ricavati da responseText (tipo stringa)
-            alert(xmlhttp.responseText);
+            //i dati trasmessi dal server sono ricavati da responseText (tipo stringa)            
             switch (xmlhttp.responseText)
             {
 
-            case '1': alert("all fine");
+            case '1': window.location.href = "./index.php";            
             break;
 
-            case '7': alert("no account could be found");
+            case '7': alert("no input was found");
             break;
             
             case '8': alert("database not findable"); 
@@ -49,7 +48,10 @@
             case '9': alert("error with the databasa query");
             break;
             
-            case '10': alert("wrong password");  
+            case '10': alert("email not found");  
+            break;
+
+            case '11': alert("wrong password");  
             break;
             
             default: break;
@@ -61,6 +63,7 @@
      //  -il secondo � l'url dove risiede lo script server-side
     //  -il terzo (booleano) specifica che la richiesta deve essere asincrona 
       xmlhttp.open("POST", "./phpscripts/checkuser.php", true);
+      xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     // send() trasmette effettivamente la richiesta al server. 
   // senza parametri si indica POST - per GET mettere i parametri tra parentesi
       xmlhttp.send(params);
